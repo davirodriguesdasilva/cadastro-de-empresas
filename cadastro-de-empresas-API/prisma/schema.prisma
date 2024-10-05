@@ -15,11 +15,11 @@ datasource db {
 
 model empresa {
   id       BigInt @id @default(autoincrement())
-  nome     String @unique
-  cnpj     Int    @unique
-  email    String @unique
-  endereco String @unique
-  telefone Int
+  nome     String 
+  cnpj     BigInt @unique
+  email    String 
+  endereco String
+  telefone BigInt 
 
   @@map("empresas_cadastradas")
 }
