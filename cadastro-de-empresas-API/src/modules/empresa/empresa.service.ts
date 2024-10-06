@@ -53,6 +53,6 @@ export class EmpresaService {
 
         await this.empresaRepository.deletarPorId(id);
 
-        return { mensagem: 'Empresa deletada com sucesso!' };
+        return { mensagem: 'Empresa excluída com sucesso!' };
     }
 }

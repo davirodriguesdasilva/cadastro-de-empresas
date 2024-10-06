@@ -1,1 +1,61 @@
-<p>adicionar-empresa works!</p>
+<div class="adicionar-empresa-container">
+  <button mat-icon-button (click)="voltar()" matTooltip="Voltar para listagem">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <mat-stepper #stepper>
+    <mat-step [stepControl]="cadastroEmpresa">
+      <form [formGroup]="cadastroEmpresa">
+        <ng-template matStepLabel>Preencha os dados da empresa</ng-template>
+        <br>
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="Digite o nome" type="text" formControlName="nome" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>CNPJ</mat-label>
+          <input matInput placeholder="Digite o CNPJ" type="number" formControlName="cnpj" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>E-mail</mat-label>
+          <input matInput placeholder="Digite o E-mail" type="text" formControlName="email" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Endereço</mat-label>
+          <input matInput placeholder="Digite o endereço" type="text" formControlName="endereco" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Telefone</mat-label>
+          <input matInput placeholder="Digite o telefone" type="number" formControlName="telefone" required>
+        </mat-form-field>
+
+      </form>
+      <div>
+        <button mat-button matStepperNext>Avançar</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Concluir</ng-template>
+      <p>Revise os dados antes de concluir.</p>
+
+      <ul>
+        <li><strong>Nome: </strong>{{cadastroEmpresa.value.nome}}</li>
+        <li><strong>CNPJ: </strong>{{cadastroEmpresa.value.cnpj}}</li>
+        <li><strong>E-mail: </strong>{{cadastroEmpresa.value.email}}</li>
+        <li><strong>Endereço: </strong>{{cadastroEmpresa.value.endereco}}</li>
+        <li><strong>Telefone: </strong>{{cadastroEmpresa.value.telefone}}</li>
+      </ul>
+
+      <strong style="color: red;" *ngIf="!cadastroEmpresa.valid">Preencha todos os campos.</strong>
+
+      <div>
+        <button mat-button matStepperPrevious>Voltar</button>
+        <button mat-button (click)="cadastrar()" [disabled]="!cadastroEmpresa.valid">Cadastrar</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

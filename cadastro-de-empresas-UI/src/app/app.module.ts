@@ -20,7 +20,7 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
     SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule, 
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [

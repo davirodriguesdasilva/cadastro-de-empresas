@@ -16,7 +16,7 @@ export class empresaRepository {
 
         } catch (error) {
             if (error.code === 'P2002') {
-                throw new ConflictException(`O valor do campo '${camposTratados}' já está cadastrado e não pode ser duplicado.`);
+                throw new ConflictException(`O valor do campo '${camposTratados[error.meta.target]}' já está cadastrado e não pode ser duplicado.`);
             }
             throw error;
         }
@@ -54,7 +54,7 @@ export class empresaRepository {
 
         } catch (error) {
             if (error.code === 'P2002') {
-                throw new ConflictException(`O valor do campo '${camposTratados}' já está cadastrado e não pode ser duplicado.`);
+                throw new ConflictException(`O valor do campo '${camposTratados[error.meta.target]}' já está cadastrado e não pode ser duplicado.`);
             }
             throw error;
         }

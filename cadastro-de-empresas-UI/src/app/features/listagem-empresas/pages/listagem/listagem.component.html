@@ -1,1 +1,58 @@
-<p>listagem works!</p>
+<div class="listagem-page-wrapper">
+
+    <button mat-flat-button (click)="cadastrar()">
+        <mat-icon>add</mat-icon>
+        <span>Cadastrar</span>
+    </button>
+
+    <table *ngIf="(store.empresas$ | async)?.length; else nenhumResultado">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Acoes</th>
+            </tr>
+        </thead>
+        <tbody class="lotes">
+            <tr *ngFor="let empresa of (store.empresas$ | async)">
+                <td>{{empresa.nome}}</td>
+                <td>{{empresa.email}}</td>
+                <td>{{empresa.telefone}}</td>
+                <td>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="verDetalhes(empresa)">
+                            <mat-icon>visibility</mat-icon>
+                            <span>Ver detalhes</span>
+                        </button>
+                        <button mat-menu-item (click)="atualizar(empresa)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Editar</span>
+                        </button>
+                        <button mat-menu-item (click)="deletar(empresa.id)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Excluir</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ng-template #nenhumResultado>
+        <div class="sem-resultados">
+            <mat-icon>search</mat-icon>
+            <p>
+                Você ainda não possui<br>
+                <strong>nenhuma empresa cadastrada.</strong>
+            </p>
+        </div>
+    </ng-template>
+
+    <mat-paginator [length]="store.total$ | async" [pageSize]="store.quantidade$ | async"
+        (page)="aplicarPaginacao($event)" [pageSizeOptions]="[5, 10, 25, 100]" hidePageSize>
+    </mat-paginator>
+
+</div>

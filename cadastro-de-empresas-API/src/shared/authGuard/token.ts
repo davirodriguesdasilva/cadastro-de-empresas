@@ -1,1 +1,1 @@
-export const TOKEN_TESTE = "Bearer MeuToken123";
+export const TOKEN_TESTE = "MeuToken123";

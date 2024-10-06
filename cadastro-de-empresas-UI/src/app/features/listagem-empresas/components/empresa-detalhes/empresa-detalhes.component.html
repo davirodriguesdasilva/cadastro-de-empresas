@@ -1,0 +1,16 @@
+<div class="detalhes-container">
+    <h2 mat-dialog-title>{{empresaDetalhes.nome}}</h2>
+    <mat-dialog-content>
+        Detalhes da empresa:
+        <ul>
+            <li><strong>CNPJ: </strong>{{empresaDetalhes.cnpj}}</li>
+            <li><strong>E-mail: </strong>{{empresaDetalhes.email}}</li>
+            <li><strong>Endereço: </strong>{{empresaDetalhes.endereco}}</li>
+            <li><strong>Telefone: </strong>{{empresaDetalhes.telefone}}</li>
+        </ul>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>Fechar</button>
+    </mat-dialog-actions>
+</div>

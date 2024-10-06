@@ -34,11 +34,10 @@ export class AppStore extends ComponentStore<AppState> {
 
     public entrarConta(token: string): void {
         this.salvarToken(token);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/listagem']);
     }
 
     public sairConta(): void {
-        this.salvarToken(null);
         this.router.navigate(['/login']);
     }
 

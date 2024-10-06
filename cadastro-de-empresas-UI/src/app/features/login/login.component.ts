@@ -32,10 +32,8 @@ export class LoginComponent {
   entrar() {
     const { usuario, senha } = this.loginForm.value;
     this.loginService.login({ usuario, senha }).subscribe({
-      next: (res) => {
-        this.store.entrarConta(res.token);
-      },
-      error: () => { this.toastr.error('Usuário não encontrado.'); },
+      next: (res) => this.store.entrarConta(res.token),
+      error: () => this.toastr.error('Usuário não encontrado.')
     })
   }
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from './components/footer/footer.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -14,11 +13,14 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatListModule} from '@angular/material/list';
+import {MatTableModule} from '@angular/material/table';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 const declarationExport = [
   NavMenuComponent,
-  FooterComponent,
 ]
 
 const importExport = [
@@ -34,6 +36,10 @@ const importExport = [
   ReactiveFormsModule,
   FormsModule,
   MatCardModule,
+  MatExpansionModule,
+  MatListModule,
+  MatTableModule,
+  MatStepperModule,
 ]
 
 @NgModule({
