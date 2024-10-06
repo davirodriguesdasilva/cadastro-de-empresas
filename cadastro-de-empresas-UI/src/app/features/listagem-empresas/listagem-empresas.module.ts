@@ -6,12 +6,14 @@ import { ListagemComponent } from './pages/listagem/listagem.component';
 import { AdicionarEmpresaComponent } from './pages/adicionar-empresa/adicionar-empresa.component';
 import { ListagemStore } from './store/listagem.store';
 import { EmpresaDetalhesComponent } from './components/empresa-detalhes/empresa-detalhes.component';
+import { TabelaEmpresasComponent } from './components/tabela-empresas/tabela-empresas.component';
 
 @NgModule({
   declarations: [
     ListagemComponent,
     AdicionarEmpresaComponent,
-    EmpresaDetalhesComponent
+    EmpresaDetalhesComponent,
+    TabelaEmpresasComponent,
   ],
   imports: [
     CommonModule,

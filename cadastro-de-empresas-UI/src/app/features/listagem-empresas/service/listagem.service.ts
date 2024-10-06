@@ -20,7 +20,7 @@ export class ListagemService {
         return this.http.post<{ mensagem: string }>(`${this.baseUrl}/criar`, empresa);
     }
 
-    atualizar(id: number, empresa: EmpresaModel): Observable<{ mensagem: string }> {
+    atualizar(id: string, empresa: EmpresaModel): Observable<{ mensagem: string }> {
         return this.http.put<{ mensagem: string }>(`${this.baseUrl}/atualizar/${id}`, empresa);
     }
 

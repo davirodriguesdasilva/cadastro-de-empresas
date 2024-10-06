@@ -1,8 +1,8 @@
 import { Component, inject, Input } from '@angular/core';
 import { EmpresaModel } from '../../../../shared/models/empresa.model';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { validarCNPJ } from '../../../../shared/functions/validar-cnpj';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ListagemStore } from '../../store/listagem.store';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-adicionar-empresa',
@@ -11,8 +11,7 @@ import { ListagemStore } from '../../store/listagem.store';
 })
 export class AdicionarEmpresaComponent {
   private formBuilder = inject(FormBuilder);
-
-  constructor(private store: ListagemStore) { }
+  @Input() dadosAtualizarEmpresa?: EmpresaModel;
 
   cadastroEmpresa = this.formBuilder.group({
     nome: ['', Validators.required],
@@ -21,6 +20,19 @@ export class AdicionarEmpresaComponent {
     endereco: ['', Validators.required],
     telefone: ['', Validators.required],
   });
+
+  constructor(private store: ListagemStore, private dialog: MatDialog) { }
+
+  ngOnInit(): void {
+    if (this.dadosAtualizarEmpresa) {
+      const dadosAjustados = {
+        ...this.dadosAtualizarEmpresa,
+        cnpj: this.dadosAtualizarEmpresa.cnpj.toString(),
+        telefone: this.dadosAtualizarEmpresa.telefone.toString(),
+      };
+      this.cadastroEmpresa.patchValue(dadosAjustados);
+    }
+  }
 
   cadastrar() {
     const model: EmpresaModel = {
@@ -31,10 +43,10 @@ export class AdicionarEmpresaComponent {
       telefone: this.cadastroEmpresa.value.telefone ? parseInt(this.cadastroEmpresa.value.telefone, 10) : 0
     };
 
-    this.store.cadastrarEmpresa(model);
+    this.dadosAtualizarEmpresa ? this.store.atualizarEmpresa(this.dadosAtualizarEmpresa.id, model) : this.store.cadastrarEmpresa(model);
   }
 
   voltar() {
-    this.store.irParaListagem();
+    this.dadosAtualizarEmpresa ? this.dialog.closeAll() : this.store.irParaListagem();
   }
 }

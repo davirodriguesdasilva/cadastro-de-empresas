@@ -1,11 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store"
-import { firstValueFrom, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { EmpresaModel } from "../../../shared/models/empresa.model";
 import { ListagemService } from "../service/listagem.service";
 import { ToastrService } from "ngx-toastr";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { EmpresaDetalhesComponent } from "../components/empresa-detalhes/empresa-detalhes.component";
+import { AdicionarEmpresaComponent } from "../pages/adicionar-empresa/adicionar-empresa.component";
 
 export interface ListagemState {
     empresas: EmpresaModel[]
@@ -32,7 +35,8 @@ export class ListagemStore extends ComponentStore<ListagemState> {
     constructor(
         private listagemService: ListagemService,
         private toastr: ToastrService,
-        private router: Router
+        private router: Router,
+        @Inject(MatDialog) private dialog: MatDialog
     ) {
         super(initialState);
     }
@@ -62,7 +66,7 @@ export class ListagemStore extends ComponentStore<ListagemState> {
         })
     }
 
-    cadastrarEmpresa(empresa: EmpresaModel) {
+    public cadastrarEmpresa(empresa: EmpresaModel) {
         this.listagemService.criar(empresa).subscribe({
             next: (res) => {
                 this.toastr.success(res.mensagem);
@@ -72,7 +76,28 @@ export class ListagemStore extends ComponentStore<ListagemState> {
         })
     }
 
-    public irParaListagem(): void{
+    public atualizarEmpresa(id: string = '', empresa: EmpresaModel) {
+        this.listagemService.atualizar(id, empresa).subscribe({
+            next: (res) => {
+                this.toastr.success(res.mensagem);
+                this.dialog.closeAll();
+                this.obterEmpresas();
+            },
+            error: (e: HttpErrorResponse) => this.toastr.error(e.error.message)
+        })
+    }
+
+    public verDetalhes(empresa: EmpresaModel) {
+        const modal = this.dialog.open(EmpresaDetalhesComponent);
+        modal.componentInstance.empresaDetalhes = empresa;
+    }
+
+    public atualizar(empresa: EmpresaModel) {
+        const modal = this.dialog.open(AdicionarEmpresaComponent);
+        modal.componentInstance.dadosAtualizarEmpresa = empresa;
+    }
+
+    public irParaListagem(): void {
         this.router.navigate(['/listagem']);
     }
 }
