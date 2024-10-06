@@ -1,1 +1,18 @@
-<p>login works!</p>
+<mat-card [formGroup]="loginForm">
+    <mat-card-title>Bem-vindo!</mat-card-title>
+    <mat-card-subtitle>Acesse sua conta:</mat-card-subtitle>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Usuário</mat-label>
+        <input matInput formControlName="usuario" placeholder="Digite seu usuário (admin)" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="senha" placeholder="Digite sua senha (admin)" />
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="entrar()" [disabled]="!loginForm.valid">
+        Entrar
+    </button>
+</mat-card>

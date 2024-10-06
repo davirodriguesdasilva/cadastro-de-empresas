@@ -11,6 +11,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import {FormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
 
 
 const declarationExport = [
@@ -28,6 +31,9 @@ const importExport = [
   MatMenuModule,
   MatPaginatorModule,
   MatDialogModule,
+  ReactiveFormsModule,
+  FormsModule,
+  MatCardModule,
 ]
 
 @NgModule({

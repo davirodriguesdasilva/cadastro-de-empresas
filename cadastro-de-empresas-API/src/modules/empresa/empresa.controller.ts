@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { EmpresaService } from './empresa.service';
 import { EmpresaDto } from './dtos/empresa.dto';
+import { AuthGuard } from 'src/shared/authGuard/auth.guard';
 
 @Controller('empresa')
+@UseGuards(AuthGuard)
 export class EmpresaController {
 
     constructor(private empresaService: EmpresaService) { }

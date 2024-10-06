@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
+import { AuthGuard } from './shared/authGuard/authGuard';
 
 export const routes: Routes = [
     {
         path: 'listagem',
-        loadChildren: () => import('./features/listagem-empresas/listagem-empresas.module').then(m => m.ListagemEmpresasModule)
+        loadChildren: () => import('./features/listagem-empresas/listagem-empresas.module').then(m => m.ListagemEmpresasModule),
+        canActivate: [AuthGuard]
     },
     {
         path: "login",
-        component: LoginComponent
+        component: LoginComponent,
     },
     { path: '**', redirectTo: '/listagem' }
 ];

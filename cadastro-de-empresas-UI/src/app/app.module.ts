@@ -5,6 +5,11 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { AppStore } from './shared/store/app.store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,10 +18,19 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     BrowserModule,
     SharedModule,
     AppRoutingModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [
-    provideAnimationsAsync()
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    AppStore
   ]
 })
 export class AppModule { }

@@ -1,5 +1,3 @@
-<!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
-
-<app-nav-menu></app-nav-menu>
+<mat-progress-bar *ngIf="store.carregando$ | async" mode="indeterminate"></mat-progress-bar>
+<app-nav-menu *ngIf="store.logado$ | async"></app-nav-menu>
 <router-outlet />
-<app-footer></app-footer>

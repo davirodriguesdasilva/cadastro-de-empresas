@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
+import { TOKEN_TESTE } from 'src/shared/authGuard/token';
 
 @Injectable()
 export class UsuarioService {
@@ -8,7 +9,7 @@ export class UsuarioService {
 
     async login(login: LoginDto) {
         if (login.usuario === 'admin' && login.senha === 'admin') {
-            const token = 'MeuToken123'; 
+            const token = TOKEN_TESTE; 
             return { token };
         }
 
