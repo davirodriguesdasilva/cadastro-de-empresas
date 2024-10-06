@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class ListagemComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  pageSize: number = 0;
 
   constructor(
     public store: ListagemStore,
@@ -20,10 +19,9 @@ export class ListagemComponent {
   }
 
   aplicarPaginacao(e: PageEvent) {
-    const { pageIndex, pageSize } = this.paginator;
-    this.pageSize = e.pageSize;
+    const { pageIndex } = this.paginator;
 
-    this.store.alterarPaginacao(pageIndex, pageSize);
+    this.store.alterarPaginacao(pageIndex);
   }
 
   cadastrar() {

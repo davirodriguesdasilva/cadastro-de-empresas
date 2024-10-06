@@ -8,7 +8,7 @@
     <app-tabela-empresas></app-tabela-empresas>
 
     <mat-paginator [length]="store.total$ | async" [pageSize]="store.quantidade$ | async"
-        (page)="aplicarPaginacao($event)" [pageSizeOptions]="[5, 10, 25, 100]" hidePageSize>
+        (page)="aplicarPaginacao($event)" hidePageSize>
     </mat-paginator>
 
 </div>

@@ -50,9 +50,9 @@ export class ListagemStore extends ComponentStore<ListagemState> {
         })
     }
 
-    public alterarPaginacao(pagina: number, quantidade: number) {
+    public alterarPaginacao(pagina: number) {
         let pageIndex = pagina + 1
-        this.patchState((s) => ({ pagina: pageIndex, quantidade }));
+        this.patchState((s) => ({ pagina: pageIndex }));
         this.obterEmpresas();
     }
 
