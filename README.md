@@ -15,10 +15,10 @@ Este projeto é dividido em duas partes:
 
 ### 1. Clonando o repositório
 
-    ```bash
+
     git clone https://github.com/davirodriguesdasilva/cadastro-de-empresas.git
-    ```
-    
+
+
 ### 2. Configurando o Back-end (NestJS)
 
 1. Navegue até a pasta da API:
