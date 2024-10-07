@@ -16,7 +16,10 @@ Este projeto é dividido em duas partes:
 ### 1. Clonando o repositório
 
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/davirodriguesdasilva/cadastro-de-empresas.git
+    ```
+
+    ```bash
     cd cadastro-de-empresas
     ```
 
@@ -25,7 +28,7 @@ Este projeto é dividido em duas partes:
 1. Navegue até a pasta da API:
 
     ```bash
-    cd cadastro-de-empresas/cadastro-de-empresas-API
+    cd cadastro-de-empresas-API
     ```
 
 2. Instale as dependências:
@@ -58,6 +61,8 @@ Este projeto é dividido em duas partes:
 
     A API estará rodando em `http://localhost:3000`.
 
+    > Certifique-se de incluir no cabeçalho o campo `Authorization` com o valor `Bearer MeuToken123` ao realizar testes individuais no backend.
+
 ### 3. Configurando o Front-end (Angular)
 
 1. Navegue até a pasta da UI:
@@ -78,8 +83,4 @@ Este projeto é dividido em duas partes:
     ng serve
     ```
 
-    O front-end estará disponível em `http://localhost:4200`.
-
-### 4. Testando a aplicação
-
-Agora você pode acessar o front-end em `http://localhost:4200` e interagir com a API que estará rodando em `http://localhost:3000`.
+    O front-end estará disponível em `http://localhost:4200/login`.
