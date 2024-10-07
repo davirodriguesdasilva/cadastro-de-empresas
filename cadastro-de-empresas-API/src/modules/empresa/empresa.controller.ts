@@ -4,7 +4,7 @@ import { EmpresaDto } from './dtos/empresa.dto';
 import { AuthGuard } from 'src/shared/authGuard/auth.guard';
 
 @Controller('empresa')
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 export class EmpresaController {
 
     constructor(private empresaService: EmpresaService) { }
