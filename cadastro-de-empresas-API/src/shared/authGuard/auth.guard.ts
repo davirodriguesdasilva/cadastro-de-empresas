@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
 
         const token = request.headers['authorization'];
 
-        if (!token || token !== TOKEN_TESTE) {
+        if (!token || token !== `Bearer ${TOKEN_TESTE}`) {
             throw new UnauthorizedException('Token inválido.');
         }
 
