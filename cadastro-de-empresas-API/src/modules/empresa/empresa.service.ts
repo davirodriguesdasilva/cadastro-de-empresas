@@ -1,58 +1,82 @@
-import { ConflictException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { empresaRepository } from './repositories/empresa.repository';
-import { EmpresaDto } from './dtos/empresa.dto';
+import { ConflictException, HttpException, HttpStatus, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { EmpresaDto } from './model/empresa.dto';
 import { validarEmail } from 'src/shared/functions/validar-email';
 import { validarCNPJ } from 'src/shared/functions/validar-cnpj';
+import { IEmpresaRepository } from './interface/empresa.repository.interface';
+import { Empresa } from './model/empresa';
+
+const camposTratados = {
+    'empresas_cadastradas_cnpj_key': 'CNPJ',
+};
 
 @Injectable()
 export class EmpresaService {
 
-    constructor(private empresaRepository: empresaRepository) { }
+    constructor(@Inject('IEmpresaRepository') private empresaRepository: IEmpresaRepository,) { }
 
-    async listagem(pagina: number, quantidade: number) {
+    async listagem(pagina: number, quantidade: number): Promise<{
+        empresas: Empresa[];
+        total: number;
+        pagina: number;
+        quantidade: number;
+    }> {
         if (!pagina || !quantidade)
             throw new HttpException('Pagina ou quantidade inválida.', HttpStatus.BAD_REQUEST);
 
-        return await this.empresaRepository.consultar(pagina, quantidade);
+        return await this.empresaRepository.consultarPaginado(pagina, quantidade);
     }
 
-    async criar(empresa: EmpresaDto) {
+    async criar(empresa: EmpresaDto): Promise<{ mensagem: String; }> {
         if (!validarEmail(empresa.email))
             throw new HttpException('E-mail inválido.', HttpStatus.BAD_REQUEST);
 
         if (!validarCNPJ(empresa.cnpj))
             throw new HttpException('CNPJ inválido.', HttpStatus.BAD_REQUEST);
 
-        await this.empresaRepository.criar(empresa);
+        try {
+            await this.empresaRepository.criar(empresa);
+            return { mensagem: 'Empresa criada com sucesso!' };
 
-        return { mensagem: 'Empresa criada com sucesso!' };
+        } catch (error) {
+            if (error.code === 'P2002') {
+                throw new ConflictException(`O valor do campo '${camposTratados[error.meta.target]}' já está cadastrado e não pode ser duplicado.`);
+            }
+            throw error;
+        }
     }
 
-    async atualizar(id: bigint, update: EmpresaDto) {
+    async atualizar(id: bigint, update: EmpresaDto): Promise<{ mensagem: String; }> {
         if (!validarEmail(update.email))
             throw new HttpException('E-mail inválido.', HttpStatus.BAD_REQUEST);
 
         if (!validarCNPJ(update.cnpj))
             throw new HttpException('CNPJ inválido.', HttpStatus.BAD_REQUEST);
 
-        const idExistente = await this.empresaRepository.consultarPorCampo('id', id);
+        try {
+            await this.empresaRepository.atualizar(id, update);
+            return { mensagem: 'Empresa atualizada com sucesso!' };
 
-        if (!idExistente)
-            throw new NotFoundException('Empresa com o ID fornecido não foi encontrada.');
-
-        await this.empresaRepository.atualizar(id, update);
-
-        return { mensagem: 'Empresa atualizada com sucesso!' };
+        } catch (error) {
+            if (error.code === 'P2002') {
+                throw new ConflictException(`O valor do campo '${camposTratados[error.meta.target]}' já está cadastrado e não pode ser duplicado.`);
+            }
+            if (error.code === 'P2025') {
+                throw new NotFoundException('Empresa com o ID fornecido não foi encontrada.');
+            }
+            throw error;
+        }
     }
 
-    async deletar(id: bigint) {
-        const idExistente = await this.empresaRepository.consultarPorCampo('id', id)
+    async deletar(id: bigint): Promise<{ mensagem: String; }> {
+        try {
+            await this.empresaRepository.deletarPorId(id);
+            return { mensagem: 'Empresa excluída com sucesso!' };
 
-        if (!idExistente)
-            throw new NotFoundException('Id não encontrado.');
-
-        await this.empresaRepository.deletarPorId(id);
-
-        return { mensagem: 'Empresa excluída com sucesso!' };
+        } catch (error) {
+            if (error.code === 'P2025') {
+                throw new NotFoundException('Empresa com o ID fornecido não foi encontrada.');
+            }
+            throw error;
+        }
     }
 }

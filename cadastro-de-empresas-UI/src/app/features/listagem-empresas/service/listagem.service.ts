@@ -13,18 +13,18 @@ export class ListagemService {
     constructor(private http: HttpClient) { }
 
     listagem(pagina: number, quantidade: number): Observable<EmpresaListaModel> {
-        return this.http.get<EmpresaListaModel>(`${this.baseUrl}/listagem?pagina=${pagina}&quantidade=${quantidade}`);
+        return this.http.get<EmpresaListaModel>(`${this.baseUrl}?pagina=${pagina}&quantidade=${quantidade}`);
     }
 
     criar(empresa: EmpresaModel): Observable<{ mensagem: string }> {
-        return this.http.post<{ mensagem: string }>(`${this.baseUrl}/criar`, empresa);
+        return this.http.post<{ mensagem: string }>(`${this.baseUrl}/`, empresa);
     }
 
     atualizar(id: string, empresa: EmpresaModel): Observable<{ mensagem: string }> {
-        return this.http.put<{ mensagem: string }>(`${this.baseUrl}/atualizar/${id}`, empresa);
+        return this.http.put<{ mensagem: string }>(`${this.baseUrl}/${id}`, empresa);
     }
 
     deletar(id: string): Observable<{ mensagem: string }> {
-        return this.http.delete<{ mensagem: string }>(`${this.baseUrl}/deletar/${id}`);
+        return this.http.delete<{ mensagem: string }>(`${this.baseUrl}/${id}`);
     }
 }

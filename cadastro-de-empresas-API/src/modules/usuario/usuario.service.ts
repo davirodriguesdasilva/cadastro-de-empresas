@@ -7,9 +7,9 @@ export class UsuarioService {
 
     constructor() { }
 
-    async login(login: LoginDto) {
+    async login(login: LoginDto): Promise<{ token: string }> {
         if (login.usuario === 'admin' && login.senha === 'admin') {
-            const token = TOKEN_TESTE; 
+            const token = TOKEN_TESTE;
             return { token };
         }
 
